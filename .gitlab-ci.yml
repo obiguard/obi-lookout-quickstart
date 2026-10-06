@@ -1,0 +1,18 @@
+# The same checks as .github/workflows/test.yml. The real-model job is manual: it downloads about 1.2 GB.
+stages: [test]
+
+logic:
+  stage: test
+  image: python:3.12-slim
+  script:
+    - python -m unittest tests.test_quickstart -v
+
+real-model:
+  stage: test
+  image: python:3.12-slim
+  when: manual
+  allow_failure: true
+  script:
+    - pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+    - pip install -r requirements.txt
+    - python -m tests.smoke

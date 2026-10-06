@@ -1,0 +1,36 @@
+name: test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  logic:
+    # No model and no installs: the helper and server are tested with a stand-in model.
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m unittest tests.test_quickstart -v
+
+  real-model:
+    # Downloads the model (about 1.2 GB, cached) and checks it finds what it should.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: obi-lookout-90a4843f
+      - run: |
+          pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+      - run: python -m tests.smoke

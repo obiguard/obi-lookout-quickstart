@@ -1,0 +1,6 @@
+# Pinned to the versions the model was tested with.
+# gliner2 does not declare torch or peft as dependencies, but fails to import without them, so they are listed here.
+torch==2.14.1
+gliner2==2.0.0
+transformers==4.57.6
+peft==0.21.2

@@ -1,0 +1,3 @@
+Hi team, please onboard Daniel Whitmore from Northwind Logistics today. His work email is daniel.whitmore@northwind.test and his mobile is +65 8123 4567.
+The staging database is db-stg-02.corp.internal and the deploy key is demo_key_7Qx2LmN8vB3kRz9TfY6wPc1d. Invoice 2291 for Project Falcon came to USD 48,250.00,
+payable to account 123-456-789-0 at Harbour Trust Bank. His NRIC is S1234567D and he was born on 12 March 1987.

@@ -1,0 +1,13 @@
+# docker compose -f docker/compose.yaml up --build
+# Then: curl -s localhost:8000/detect -d '{"text":"Email aisha@example.test","redact":"label"}'
+services:
+  obi-lookout:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"   # only this machine; remove "127.0.0.1:" to share it, and then set OBI_API_KEY below
+    # environment:
+    #   OBI_API_KEY: "a-long-random-string"   # uncomment to require `Authorization: Bearer <key>`
+    read_only: true
+    tmpfs: [/tmp]

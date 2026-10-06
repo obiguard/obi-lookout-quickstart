@@ -1,0 +1,2 @@
+admin@build-01:~$ curl -H "Authorization: Bearer demo_key_7Qx2LmN8vB3kRz9TfY6wPc1d" https://api.example.test/v1/users
+admin@build-01:~$ ssh deploy@db-stg-02.corp.internal
