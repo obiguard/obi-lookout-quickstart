@@ -100,6 +100,9 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(self.call("/v1/models", key="wrong")[0], 401)
         self.assertEqual(self.call("/v1/models")[0], 200)
 
+    def test_a_non_ascii_key_is_refused_not_a_server_error(self):
+        self.assertEqual(self.call("/v1/models", key="clé")[0], 401)
+
     def test_chat_completion_shape_and_redaction(self):
         status, body = self.call("/v1/chat/completions", {"model": "obi-lookout", "obi_redact": "label",
                                                           "messages": [{"role": "user", "content": "mail a@x.test now"}]})

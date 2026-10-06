@@ -9,6 +9,8 @@ before it reaches a language model or a log. It is a detector, not a chat model.
 > **It is not a guarantee.** It will miss some values and flag some that are not sensitive. Do not use it as your only control.
 > Its published scores come from a synthetic test set (see [Know the limits](#know-the-limits)); real documents will differ.
 
+All names, numbers and organisations in the samples and examples are made up. Any match with a real person or company is coincidence.
+
 ## Three ways to run it
 
 | You want | Use |
@@ -51,6 +53,8 @@ print(lookout.redact(text, "mask"))         # "...call ************ on *********
 
 `requirements.txt` lists `torch` and `peft` even though the `gliner2` package does not declare them: it fails to import without them.
 Versions are pinned to the ones the model was tested with (torch 2.14.1, gliner2 2.0.0, transformers 4.57.6). Tested on Python 3.11 and 3.12.
+
+**You will see a tokenizer warning on load** ("incorrect regex pattern ... set `fix_mistral_regex=True`"). Ignore it. It is a false alarm for this model: that flag is a patch for Mistral tokenizers, and setting it here breaks tokenization (it turns spaces into unknown tokens). The model was trained and scored without it.
 
 More: [`examples/`](examples) has English/Malay/mixed text, redaction, long text and an OpenAI-client call, all on synthetic text in [`samples/`](samples).
 
@@ -102,7 +106,7 @@ What to know about the server:
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/obiguard/obi-lookout-quickstart/blob/main/notebook.ipynb)
 
-Runs on Google's free CPU. **Use the sample text only: anything you paste into Colab goes to Google's servers**, which defeats the point of a tool that
+**Not yet tested on Colab itself** (the code was run locally, not there), so pins may clash with Colab's preinstalled packages. If it fails, open an issue. Runs on Google's free CPU. **Use the sample text only: anything you paste into Colab goes to Google's servers**, which defeats the point of a tool that
 finds sensitive data. For real text, use one of the local options above.
 
 ## What it finds
@@ -111,7 +115,7 @@ finds sensitive data. For real text, use one of the local options above.
 |---|---|
 | `person` | Aisha binti Rahman, Daniel Whitmore |
 | `id_number` | Malaysian IC, Singapore NRIC |
-| `phone` | `+60 12-345 6789`, `+65 8123 4567` |
+| `phone` | `+60 12-345 6789`, `+65 9000 0000` |
 | `email` | `name@company.test` |
 | `address` | street addresses, with postcode and state |
 | `date_of_birth` | `12 March 1987` |
@@ -155,7 +159,7 @@ python -m tests.smoke                        # runs the real model once
 
 ## Problems and questions
 
-Open an issue here. Please do not paste real personal data into an issue: describe the kind of text and what went wrong, or use a made-up example.
+Open an issue here. For a security problem, see [SECURITY.md](SECURITY.md) instead. Please do not paste real personal data into an issue: describe the kind of text and what went wrong, or use a made-up example.
 
 ## Licence
 

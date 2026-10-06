@@ -115,7 +115,7 @@ def make_server(lookout, host: str, port: int, api_key: str | None = None, limit
         def _guard(self, work) -> None:
             try:
                 header = self.headers.get("Authorization", "")
-                if api_key and not (header.startswith("Bearer ") and hmac.compare_digest(header[7:], api_key)):
+                if api_key and not (header.startswith("Bearer ") and hmac.compare_digest(header[7:].encode(), api_key.encode())):
                     raise ApiError(401, "missing or wrong API key", "authentication_error")
                 self._send(200, work())
             except ApiError as error:

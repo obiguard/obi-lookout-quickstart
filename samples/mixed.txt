@@ -1,2 +1,2 @@
 Hi Farid, boleh you forward invoice untuk Project Kijang to Lim Wei Ming (wei.ming@contoh-corp.test)? Dia cakap bayaran SGD 3,900 masuk ke akaun 7012345678 minggu depan.
-Kalau ada masalah, call dia di +60 11-2345 6789 atau check server jump-host-01.contoh.internal. API token kita: demo_token_Zk4Rm9Xq2LvB7nTc5YwP8dJf3sHa.
+Kalau ada masalah, call dia di +60 12-000 0000 atau check server jump-host-01.contoh.internal. API token kita: demo_token_Zk4Rm9Xq2LvB7nTc5YwP8dJf3sHa.

@@ -19,6 +19,7 @@ jobs:
       - run: python -m unittest tests.test_quickstart -v
 
   real-model:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     # Downloads the model (about 1.2 GB, cached) and checks it finds what it should.
     runs-on: ubuntu-latest
     steps:
