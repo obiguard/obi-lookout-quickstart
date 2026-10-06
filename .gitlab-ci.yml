@@ -38,7 +38,9 @@ publish_github:
     - test -n "$GITHUB_DEPLOY_KEY" || { echo "GITHUB_DEPLOY_KEY is not set (protected File variable)" >&2; exit 1; }
     - apk add --no-cache git openssh-client
     - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - cp "$GITHUB_DEPLOY_KEY" ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+    # A pasted key often loses its final newline or gains carriage returns, and ssh then reports "error in libcrypto". Repair both, then prove the key parses.
+    - tr -d '\r' < "$GITHUB_DEPLOY_KEY" > ~/.ssh/id_ed25519 && echo >> ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+    - ssh-keygen -y -f ~/.ssh/id_ed25519 > /dev/null || { echo "GITHUB_DEPLOY_KEY is not a valid private key - paste the whole file, BEGIN line to END line" >&2; exit 1; }
     # Trust GitHub's host key only if it matches the fingerprint GitHub publishes (docs.github.com, "GitHub's SSH key fingerprints").
     - ssh-keyscan -t ed25519 github.com > ~/.ssh/known_hosts 2>/dev/null
     - ssh-keygen -lf ~/.ssh/known_hosts | grep -q "SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU" || { echo "GitHub host key does not match the published fingerprint" >&2; exit 1; }
