@@ -7,7 +7,7 @@ English, Malay and mixed text, including Malaysian and Singapore formats. It ret
 before it reaches a language model or a log. It is a detector, not a chat model.
 
 > **It is not a guarantee.** It will miss some values and flag some that are not sensitive. Do not use it as your only control.
-> Its published scores come from a synthetic test set (see [Know the limits](#know-the-limits)); real documents will differ.
+> Its main scores come from a synthetic test set, and on a small test of real public text it scored much lower (see [Know the limits](#know-the-limits)).
 
 All names, numbers and organisations in the samples and examples are made up. Any match with a real person or company is coincidence.
 
@@ -139,7 +139,7 @@ cut in half. [`examples/04_long_text.py`](examples/04_long_text.py) shows it. If
 - On values that do not appear in the training data, recall is 0.918 (0.975 on values that do). The fairer guide to new text is the lower one.
 - The weakest labels are `organisation` (F1 0.761), `client_or_project_name` (0.836, recall 0.599 on unseen names) and `internal_host` (0.887). A client name is easily taken for an organisation, and the reverse.
 - It is weaker on text that is not prose. In a separate test of 16 layouts, F1 was 0.883 overall, and lowest on shell sessions (0.500): for example `deploy@db-host.corp.internal` can be reported as an email, and public IPs as internal hosts. Tables and access logs are also weaker.
-- **No result exists on real documents.** Everything above is on synthetic text from the same family as the training data.
+- **On real documents it scores much lower.** On 104 passages of real public text (Wikipedia, Singapore government procurement and company-register tables, open-source documentation), strict F1 on the nine labels shared with other open models was **0.46** (95% interval 0.37 to 0.56), against 0.31 for the next best open model and 0.30 for Presidio. On technical text such as documentation, configs and command output it scored 0.31, and 20 of 31 passages with nothing sensitive had a false alarm. It is weak on table rows (addresses, registration numbers, amounts) and flags product names, file names and version strings. The sample favours obi-lookout, and on the randomly drawn part Presidio scored higher. The labels were made by a language model, not people, and the test has no business documents (emails, invoices, contracts). Phone numbers, bank accounts and client or project names could not be tested on real text. Details are on the [model card](https://huggingface.co/obiguard/obi-lookout). Everything else above is synthetic text from the same family as the training data.
 - Only English, Malay and mixed text were measured.
 
 Full tables, how it was built, and the evaluation data (so you can reproduce the numbers) are on the [model card](https://huggingface.co/obiguard/obi-lookout) and the
