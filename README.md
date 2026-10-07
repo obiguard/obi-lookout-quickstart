@@ -106,7 +106,7 @@ What to know about the server:
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/obiguard/obi-lookout-quickstart/blob/main/notebook.ipynb)
 
-**Not yet tested on Colab itself** (the code was run locally, not there), so pins may clash with Colab's preinstalled packages. If it fails, open an issue. Runs on Google's free CPU. **Use the sample text only: anything you paste into Colab goes to Google's servers**, which defeats the point of a tool that
+Runs on Google's free CPU (checked on Colab on 2026-10-07). If an install step clashes with Colab's preinstalled packages, open an issue. **Use the sample text only: anything you paste into Colab goes to Google's servers**, which defeats the point of a tool that
 finds sensitive data. For real text, use one of the local options above.
 
 ## What it finds
