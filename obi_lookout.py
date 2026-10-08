@@ -21,12 +21,12 @@ from dataclasses import dataclass
 
 MODEL = "obiguard/obi-lookout"
 # Pinned so this guide cannot break when the model changes. Use "main" to follow the latest release.
-REVISION = "90a4843fa6d510fa9af8eb18780fda669968576d"
+REVISION = "92b43ba0977e87adeaf00930221d7b0e38bbb695"  # v0.4.0 (v0.1.0 was 90a4843f; its tag is "v0.1.0")
 
-# The labels the model was trained and scored with. `medical_or_sensitive_category` had no examples in the data, so do not rely on it.
+# The labels the model was trained and scored with (v0.4 no longer lists `medical_or_sensitive_category`, which v0.1 named but never had data for).
 LABELS = (
     "person", "id_number", "phone", "email", "address", "date_of_birth", "financial_account", "organisation",
-    "secret", "internal_host", "financial_figure", "client_or_project_name", "medical_or_sensitive_category",
+    "secret", "internal_host", "financial_figure", "client_or_project_name",
 )
 # When two labels claim the same text with the same confidence, the earlier one here wins (same rule as the scoring on the model card).
 PRIORITY = (

@@ -125,7 +125,6 @@ finds sensitive data. For real text, use one of the local options above.
 | `client_or_project_name` | `Project Falcon`, client names in business text |
 | `secret` | API keys and tokens |
 | `internal_host` | `db-stg-02.corp.internal` |
-| `medical_or_sensitive_category` | **no training or test examples. Do not rely on it.** |
 
 ## Long text
 
@@ -135,11 +134,11 @@ cut in half. [`examples/04_long_text.py`](examples/04_long_text.py) shows it. If
 
 ## Know the limits
 
-- **Overall strict F1 is 0.927** (95% interval 0.919 to 0.934) on 1,569 documents written by a language model from fake data. Strict means start, end and label must all match. On text that contains nothing sensitive, 7.1% of documents had at least one false alarm.
-- On values that do not appear in the training data, recall is 0.918 (0.975 on values that do). The fairer guide to new text is the lower one.
-- The weakest labels are `organisation` (F1 0.761), `client_or_project_name` (0.836, recall 0.599 on unseen names) and `internal_host` (0.887). A client name is easily taken for an organisation, and the reverse.
-- It is weaker on text that is not prose. In a separate test of 16 layouts, F1 was 0.883 overall, and lowest on shell sessions (0.500): for example `deploy@db-host.corp.internal` can be reported as an email, and public IPs as internal hosts. Tables and access logs are also weaker.
-- **On real documents it scores much lower.** On 104 passages of real public text (Wikipedia, Singapore government procurement and company-register tables, open-source documentation), strict F1 on the nine labels shared with other open models was **0.46** (95% interval 0.37 to 0.56), against 0.31 for the next best open model and 0.30 for Presidio. On technical text such as documentation, configs and command output it scored 0.31, and 20 of 31 passages with nothing sensitive had a false alarm. It is weak on table rows (addresses, registration numbers, amounts) and flags product names, file names and version strings. The sample favours obi-lookout, and on the randomly drawn part Presidio scored higher. The labels were made by a language model, not people, and the test has no business documents (emails, invoices, contracts). Phone numbers, bank accounts and client or project names could not be tested on real text. Details are on the [model card](https://huggingface.co/obiguard/obi-lookout). Everything else above is synthetic text from the same family as the training data.
+- **Overall strict F1 is 0.923** (95% interval 0.914 to 0.931) on 1,569 documents written by a language model from fake data. Strict means start, end and label must all match. On text that contains nothing sensitive, 9.1% of documents had at least one false alarm.
+- On values that do not appear in the training data, recall is 0.915 (0.963 on values that do). The fairer guide to new text is the lower one.
+- The weakest labels are `organisation` (F1 0.742), `client_or_project_name` (0.833, recall 0.559 on unseen names) and `internal_host` (0.880). A client name is easily taken for an organisation, and the reverse.
+- It is weaker on text that is not prose. In a separate test of 16 layouts, F1 was 0.916 overall, and lowest on shell sessions (0.667), Wazuh alerts (0.772), access logs (0.788) and app logs (0.832): for example `deploy@db-host.corp.internal` can be reported as an email, and public IPs as internal hosts.
+- **On real documents it scores lower.** On 100 passages of real public text from sources no earlier test or training design used (company registers, Wikipedia in English and Malay, open-source documentation), strict F1 on all twelve labels was **0.88** (95% interval 0.82 to 0.93), against 0.53 for the previous release (v0.1). Phone numbers, e-mail and registration numbers in register tables were found at 1.00 F1 there; person names (0.71), Malay prose (0.68) and addresses in registers (0.81) are weaker, and technical text (documentation, configs, command output) scored 0.47 on an earlier real set. On 31 real passages with nothing sensitive, 7 had a false alarm. Product, file and version names can still be flagged as hosts, secrets or organisations. The labels were made by a language model, not people, and the test has no business documents (emails, invoices, contracts). Client or project names, bank accounts and secrets could not be tested on real text. Details are on the [model card](https://huggingface.co/obiguard/obi-lookout). Everything else above is synthetic text from the same family as the training data.
 - Only English, Malay and mixed text were measured.
 
 Full tables, how it was built, and the evaluation data (so you can reproduce the numbers) are on the [model card](https://huggingface.co/obiguard/obi-lookout) and the
