@@ -21,7 +21,7 @@ from dataclasses import dataclass
 
 MODEL = "obiguard/obi-lookout"
 # Pinned so this guide cannot break when the model changes. Use "main" to follow the latest release.
-REVISION = "92b43ba0977e87adeaf00930221d7b0e38bbb695"  # v0.4.0 (v0.1.0 was 90a4843f; its tag is "v0.1.0")
+REVISION = "bb0429a83618afa64e8fc0f99a98809398ed62fc"  # v0.6.0 (earlier: v0.4.0 = 92b43ba0, v0.1.0 = 90a4843f; tags "v0.4.0", "v0.1.0")
 
 # The labels the model was trained and scored with (v0.4 no longer lists `medical_or_sensitive_category`, which v0.1 named but never had data for).
 LABELS = (
